@@ -6,7 +6,7 @@
 #    By: llethuil <lucas.lethuillier@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/02 13:01:08 by llethuil          #+#    #+#              #
-#    Updated: 2022/08/02 16:24:17 by llethuil         ###   ########.fr        #
+#    Updated: 2022/08/02 17:19:02 by llethuil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,15 +27,31 @@ class GameState():
         self.whiteToMove = True
         self.moveLog = []
     
-    # NEW CODE 
+
     def makeMove(self, move):
+        ''' 
+            This function take a Move as parameter and execute it. It won't work for castling, pawn promotion and en passant.
+        '''
         self.board[move.startRow][move.startCol] = '--'
         self.board[move.endRow][move.endCol] = move.pieceMoved
         self.moveLog.append(move) # log the move  so we can undo it later
         self.whiteToMove = not self.whiteToMove # swap players
-    # NEW CODE 
 
-# NEW CODE 
+
+    def undoMove(self):
+        ''' 
+            This function undo the lase move made by the player.
+        '''
+        if len(self.moveLog) != 0:
+            move = self.moveLog.pop()
+            self.board[move.startRow][move.startCol] = move.pieceMoved
+            self.board[move.endRow][move.endCol] = move.pieceCaptured
+            self.whiteToMove = not self.whiteToMove # swap players
+
+
+# VIDEO PART 3 - 11 minutes
+
+
 class Move():
     ranksToRows = {"1": 7, "2": 6, "3": 5, "4": 4,
                    "5": 3, "6": 2, "7": 1, "8": 0}
@@ -60,4 +76,3 @@ class Move():
 
     def getRankFile(self, r, c):
         return self.colsToFiles[c] + self.rowsToRanks[r]
-# NEW CODE 

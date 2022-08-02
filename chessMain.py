@@ -6,7 +6,7 @@
 #    By: llethuil <lucas.lethuillier@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/02 13:01:23 by llethuil          #+#    #+#              #
-#    Updated: 2022/08/02 16:32:42 by llethuil         ###   ########.fr        #
+#    Updated: 2022/08/02 17:10:07 by llethuil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,14 +42,14 @@ def main():
     loadPiecesImg()
     running = True
     sqSelected = () # No square selected, keep track of the last click of the user (tuple : (row, col))
-    playerClicks = [] # Keep track of player clicks (two tuples : [(row_1, col_1), (row_2, col_2)])    # NEW CODE
+    playerClicks = [] # Keep track of player clicks (two tuples : [(row_1, col_1), (row_2, col_2)])
     while running :
         screen.fill("black")
         screen.blit(BOARD_IMG, (SCREEN_WDTH/4, SCREEN_HGT/4))
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
-            # NEW CODE    
+            # mouse handler  
             elif e.type == p.MOUSEBUTTONDOWN:
                 location = p.mouse.get_pos() # (x, y) location of the mouse
                 col = location[0]//SQ_SIZE - 4
@@ -60,13 +60,17 @@ def main():
                 else:
                     sqSelected = (row, col)
                     playerClicks.append(sqSelected) # append for both 1st and @nd clicks
-                if len(playerClicks) == 2: #after 2nd click
+                if len(playerClicks) == 2: # after 2nd click
                     move = chessEngine.Move(playerClicks[0], playerClicks[1], state.board)
                     print(move.getChessNotation())
                     state.makeMove(move)
-                    sqSelected = () #reser user click
+                    sqSelected = () # reset user click
                     playerClicks = []
-            # NEW CODE
+            #key handler
+            if e.type == p.KEYDOWN:
+                if e.key == p.K_z: # undo move when 'z' is pressed
+                    state.undoMove()
+
         drawPieces(screen, state.board)     
         clock.tick(MAX_FPS)
         p.display.flip()
