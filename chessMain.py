@@ -6,19 +6,19 @@
 #    By: llethuil <lucas.lethuillier@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/02 13:01:23 by llethuil          #+#    #+#              #
-#    Updated: 2022/08/02 17:10:07 by llethuil         ###   ########.fr        #
+#    Updated: 2022/08/02 17:35:11 by llethuil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 import  pygame      as      p
 import  chessEngine
 
-SCREEN_WDTH = SCREEN_HGT = 512
-BOARD_WDTH = BOARD_HGT = 256
+SCREEN_WDTH = SCREEN_HGT = 1024
+BOARD_WDTH = BOARD_HGT = 512
 DIMENSION = 8
 SQ_SIZE = BOARD_WDTH // DIMENSION
 MAX_FPS = 15
-BOARD_IMG = p.image.load("images/boards/board256.png")
+BOARD_IMG = p.image.load("images/boards/board512.png")
 PIECES_IMG = {}
 
 def loadPiecesImg():
